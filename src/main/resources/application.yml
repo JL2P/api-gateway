@@ -1,0 +1,35 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: api-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+zuul:
+  prefix: /api
+  ignored-services: '*'
+  routes:
+    account-service:
+      path: /accounts/**        # /api/accounts/
+      serviceId: account-service
+    todo-service:
+      path: /todos/**
+      serviceId: todo-service # /api/todos/
+    group-service:
+      path: /groups/**
+      serviceId: group-service # /api/groups/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: '*'
